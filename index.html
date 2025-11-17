@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Checker</title>
+    
+    <!-- TinyMCE - از هاست لوکال -->
+    <script src="/0/tinymce/tinymce.min.js"></script>
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Vazir Font CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/seo-panel.css">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+    <!-- Editor Container -->
+    <div class="editor-container">
+        <textarea id="editor">سلام! 👋</textarea>
+    </div>
+
+    <!-- SEO Panel -->
+    <div class="seo-panel">
+        <!-- Header با Progress Bar -->
+        <div class="seo-header">
+            <h2>📊 تحلیل SEO</h2>
+            <div class="seo-score">
+                <div class="score-info">
+                    <div class="score-label-wrapper">
+                        <h3 id="scoreLabel">در حال تحلیل...</h3>
+                        <p id="scoreDesc">لطفاً کلمه کلیدی را وارد کنید</p>
+                    </div>
+                    <div class="score-value" id="scoreCircle">--</div>
+                </div>
+                <div class="score-progress-bar">
+                    <div class="score-progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="seo-content">
+            <!-- Config Section -->
+            <div class="seo-config">
+                <div class="config-group">
+                    <label>🎯 کلمه کلیدی اصلی</label>
+                    <input type="text" id="mainKeyword" placeholder="مثال: آموزش سئو">
+                </div>
+                <div class="config-group">
+                    <label>🔖 کلمات کلیدی فرعی</label>
+                    <div class="keywords-input-container">
+                        <input 
+                            type="text" 
+                            id="secondaryKeywords" 
+                            class="keywords-input"
+                            placeholder="کلمه را تایپ کنید و Enter بزنید">
+                        <div class="keywords-tags" id="keywordsTags"></div>
+                    </div>
+                    <div class="keywords-hint">💡 برای افزودن کلمه، تایپ کنید و Enter بزنید</div>
+                </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="seo-tabs">
+                <button class="seo-tab active" data-tab="seo">
+                    <span class="seo-tab-icon">🎯</span>
+                    <span>تحلیل SEO</span>
+                    <span class="seo-tab-badge" id="seoBadge" style="display:none;">0</span>
+                </button>
+                <button class="seo-tab" data-tab="readability">
+                    <span class="seo-tab-icon">📖</span>
+                    <span>خوانایی</span>
+                    <span class="seo-tab-badge" id="readabilityBadge" style="display:none;">0</span>
+                </button>
+                <button class="seo-tab" data-tab="suggestions">
+                    <span class="seo-tab-icon">💡</span>
+                    <span>پیشنهادات</span>
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="seo-checks">
+                <!-- تب تحلیل SEO -->
+                <div class="seo-tab-content active" id="seoTab">
+                    <!-- Stats Box -->
+                    <div class="stats-box">
+                        <div class="stat-item">
+                            <div class="stat-value" id="wordCount">0</div>
+                            <div class="stat-label">تعداد کلمات</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="keywordCount">0</div>
+                            <div class="stat-label">تکرار کلیدواژه</div>
+                        </div>
+                    </div>
+
+                    <!-- SEO Checks List -->
+                    <div id="checksList"></div>
+                </div>
+
+                <!-- تب خوانایی -->
+                <div class="seo-tab-content" id="readabilityTab">
+                    <div class="readability-section">
+                        <div class="readability-title">📖 تحلیل خوانایی محتوا</div>
+                        <div id="readabilityChecks"></div>
+                    </div>
+                </div>
+
+                <!-- تب پیشنهادات -->
+                <div class="seo-tab-content" id="suggestionsTab">
+                    <div id="suggestionsContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div class="info-modal" id="infoModal">
+        <div class="info-content">
+            <div class="info-header">
+                <div class="info-icon">ℹ️</div>
+                <div class="info-title" id="infoTitle">عنوان</div>
+                <button class="info-close" id="closeModalBtn">×</button>
+            </div>
+            <div class="info-body" id="infoBody">متن توضیحات</div>
+        </div>
+    </div>
+
+    <!-- ✅ JavaScript با ES Modules -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
