@@ -92,7 +92,7 @@ export class TinyMCEManager {
                 
                 // Quickbars
                 quickbars_insert_toolbar: '',
-                quickbars_selection_toolbar: 'bold italic underline h1 h2 h3 blockquote',
+                quickbars_selection_toolbar: 'bold italic underline link h1 h2 h3 blockquote',
                 
                 paste_as_text: false,
                 paste_data_images: true,
