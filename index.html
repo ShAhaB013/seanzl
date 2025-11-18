@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO Checker</title>
+    <title>Seo Checker</title>
     
-    <!-- TinyMCE - از هاست لوکال -->
-    <script src="/0/tinymce/tinymce.min.js"></script>
+    <!-- TinyMCE -->
+    <script src="https://bstsongs.ir/tinymce/tinymce.min.js"></script>
+    
+    <!-- Natural Language Processing Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/natural@6.5.0/lib/natural.min.js"></script>
     
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
@@ -27,24 +31,19 @@
 
     <!-- SEO Panel -->
     <div class="seo-panel">
-        <!-- Header با Progress Bar -->
+        <!-- Header -->
         <div class="seo-header">
             <h2>📊 تحلیل SEO</h2>
             <div class="seo-score">
-                <div class="score-info">
-                    <div class="score-label-wrapper">
-                        <h3 id="scoreLabel">در حال تحلیل...</h3>
-                        <p id="scoreDesc">لطفاً کلمه کلیدی را وارد کنید</p>
-                    </div>
-                    <div class="score-value" id="scoreCircle">--</div>
-                </div>
-                <div class="score-progress-bar">
-                    <div class="score-progress-fill" style="width: 0%"></div>
+                <div class="score-circle" id="scoreCircle">--</div>
+                <div class="score-text">
+                    <h3 id="scoreLabel">در حال تحلیل...</h3>
+                    <p id="scoreDesc">لطفاً کلمه کلیدی را وارد کنید</p>
                 </div>
             </div>
         </div>
 
-        <!-- Content Section -->
+        <!-- Content Section (شامل Config و Checks) -->
         <div class="seo-content">
             <!-- Config Section -->
             <div class="seo-config">
@@ -53,68 +52,32 @@
                     <input type="text" id="mainKeyword" placeholder="مثال: آموزش سئو">
                 </div>
                 <div class="config-group">
-                    <label>🔖 کلمات کلیدی فرعی</label>
-                    <div class="keywords-input-container">
-                        <input 
-                            type="text" 
-                            id="secondaryKeywords" 
-                            class="keywords-input"
-                            placeholder="کلمه را تایپ کنید و Enter بزنید">
-                        <div class="keywords-tags" id="keywordsTags"></div>
-                    </div>
-                    <div class="keywords-hint">💡 برای افزودن کلمه، تایپ کنید و Enter بزنید</div>
+                    <label>🔖 کلمات کلیدی فرعی (با ویرگول جدا کنید)</label>
+                    <input type="text" id="secondaryKeywords" placeholder="مثال: بهینه‌سازی سایت، گوگل">
                 </div>
             </div>
 
-            <!-- Tabs Navigation -->
-            <div class="seo-tabs">
-                <button class="seo-tab active" data-tab="seo">
-                    <span class="seo-tab-icon">🎯</span>
-                    <span>تحلیل SEO</span>
-                    <span class="seo-tab-badge" id="seoBadge" style="display:none;">0</span>
-                </button>
-                <button class="seo-tab" data-tab="readability">
-                    <span class="seo-tab-icon">📖</span>
-                    <span>خوانایی</span>
-                    <span class="seo-tab-badge" id="readabilityBadge" style="display:none;">0</span>
-                </button>
-                <button class="seo-tab" data-tab="suggestions">
-                    <span class="seo-tab-icon">💡</span>
-                    <span>پیشنهادات</span>
-                </button>
-            </div>
-
-            <!-- Tab Contents -->
+            <!-- Checks Section -->
             <div class="seo-checks">
-                <!-- تب تحلیل SEO -->
-                <div class="seo-tab-content active" id="seoTab">
-                    <!-- Stats Box -->
-                    <div class="stats-box">
-                        <div class="stat-item">
-                            <div class="stat-value" id="wordCount">0</div>
-                            <div class="stat-label">تعداد کلمات</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="keywordCount">0</div>
-                            <div class="stat-label">تکرار کلیدواژه</div>
-                        </div>
+                <!-- Stats Box -->
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <div class="stat-value" id="wordCount">0</div>
+                        <div class="stat-label">تعداد کلمات</div>
                     </div>
-
-                    <!-- SEO Checks List -->
-                    <div id="checksList"></div>
-                </div>
-
-                <!-- تب خوانایی -->
-                <div class="seo-tab-content" id="readabilityTab">
-                    <div class="readability-section">
-                        <div class="readability-title">📖 تحلیل خوانایی محتوا</div>
-                        <div id="readabilityChecks"></div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="keywordCount">0</div>
+                        <div class="stat-label">تکرار کلیدواژه</div>
                     </div>
                 </div>
 
-                <!-- تب پیشنهادات -->
-                <div class="seo-tab-content" id="suggestionsTab">
-                    <div id="suggestionsContent"></div>
+                <!-- SEO Checks List -->
+                <div id="checksList"></div>
+
+                <!-- Readability Section -->
+                <div class="readability-section">
+                    <div class="readability-title">📖 خوانایی محتوا</div>
+                    <div id="readabilityChecks"></div>
                 </div>
             </div>
         </div>
@@ -132,7 +95,12 @@
         </div>
     </div>
 
-    <!-- ✅ JavaScript با ES Modules -->
-    <script type="module" src="js/main.js"></script>
+    <!-- JavaScript Files -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/seo-analyzer.js"></script>
+    <script src="js/ui-handler.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
